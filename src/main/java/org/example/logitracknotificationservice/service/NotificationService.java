@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.example.logitracknotificationservice.dto.NotificationDTO;
+import org.example.logitracknotificationservice.exception.NotificationNotFoundException;
 import org.example.logitracknotificationservice.mapper.NotificationMapper;
 import org.example.logitracknotificationservice.model.Notification;
 import org.example.logitracknotificationservice.repository.NotificationRepository;
@@ -27,7 +28,7 @@ public class NotificationService {
 
     public NotificationDTO getNotificationById(Long id){
         Notification notification = repo.findById(id)
-                .orElseThrow(() -> new RuntimeException("Notification introuvable avec l'id : " + id));
+                .orElseThrow(() -> new NotificationNotFoundException("Notification introuvable avec l'id : " + id));
         return mapper.toDto(notification);
     }
 
@@ -47,7 +48,7 @@ public class NotificationService {
 
     public NotificationDTO markRead(Long id){
         Notification notification = repo.findById(id)
-                .orElseThrow(() -> new RuntimeException("Notification introuvable avec l'id :" + id ));
+                .orElseThrow(() -> new NotificationNotFoundException("Notification introuvable avec l'id :" + id ));
         notification.setReadStatus(true);
         Notification updated = repo.save(notification);
         return mapper.toDto(updated);

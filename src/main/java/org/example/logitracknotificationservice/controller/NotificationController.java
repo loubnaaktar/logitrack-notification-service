@@ -20,6 +20,11 @@ public class NotificationController {
         return ResponseEntity.ok(service.getAllNotifications());
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<NotificationDTO> getNotificationById(@PathVariable Long id){
+        return ResponseEntity.ok(service.getNotificationById(id));
+    }
+
     @GetMapping("/order/{orderId}")
     public ResponseEntity<List<NotificationDTO>> getNotificationsByOrederId(@PathVariable Long orderId){
         return ResponseEntity.ok(service.getNotificationsByOrderId(orderId));
